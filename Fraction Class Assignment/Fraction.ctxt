@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Fraction
+comment1.params=
+comment1.target=Fraction()
+comment2.params=num\ den
+comment2.target=Fraction(int,\ int)
+comment3.params=f
+comment3.target=Fraction(java.lang.String)
+numComments=4
