@@ -3,12 +3,15 @@ public class Fraction {
     private int den;
     
     //Constructors
+    
+    //all good
     public Fraction() {
         System.out.println("No parameters found, setting fraction to '1/1'.");
         this.num = 1;
         this.den = 1;
     }
-
+    
+    //all good
     public Fraction(int num, int den) {
         this.num = num;
         
@@ -18,8 +21,11 @@ public class Fraction {
         } else {
             this.den = den;
         }
+        
+        this.reduce();
     }
     
+    //all good
     public Fraction(String f) {
         int slashIndex = -1;
         f = f.trim();
@@ -34,7 +40,7 @@ public class Fraction {
                         }
                     }
                     if (errorFound == false) {
-                        if (f.indexOf("/") != 0 || f.indexOf("/") != f.length() - 1) {
+                        if (f.indexOf("/") != 0 && f.indexOf("/") != f.length() - 1) {
                             slashIndex = f.indexOf("/");
                         } else {
                             System.out.println("Error, no numbers found before or after '/'.");
@@ -70,29 +76,37 @@ public class Fraction {
             this.num = 1;
             this.den = 1;
         }
+        
+        this.reduce();
     }
     
+    //all good
     public Fraction(Fraction f) {
         System.out.println("Making copy of fraction: '" + f + "'.");
-        this.num = num;
-        this.den = den;
+        this.num = f.num;
+        this.den = f.den;
     }
     //Constructors
     
     //Accessor Methods
+    
+    //all good
     public int getNum() {
         return this.num;
     }
     
+    //all good
     public int getDenom() {
         return this.den;
     }
     
+    //all good
     public String toString() {
         String s = this.num + "/" + this.den;
         return s;
     }
     
+    //all good
     public double toDouble() {
         double d = (double)this.num / (double)this.den;
         return d;
@@ -100,6 +114,8 @@ public class Fraction {
     //Accessor Methods
     
     //Mutator Methods
+    
+    //all good
     public void reduce() {
         int d = 1;
         
@@ -113,10 +129,12 @@ public class Fraction {
         }
     }
     
+    //all good
     public void setNum(int n) {
         this.num = n;
     }
     
+    //all good
     public void setDenom(int d) {
         if (d != 0) {
             this.den = d;
@@ -127,60 +145,89 @@ public class Fraction {
     //Mutator Methods
     
     //Static Methods
-    public Fraction multiply(Fraction f1, Fraction f2) {
+    
+    //all good
+    public static Fraction multiply(Fraction f1, Fraction f2) {
         int tnum = 1;
         int tden = 1;
         
         tnum = f1.num * f2.num;
         tden = f1.den * f2.den;
         
-        return new Fraction(tnum, tden);
+        Fraction t = new Fraction(tnum, tden);
+        t.reduce();
+        
+        return t;
     }
     
-    public Fraction divide(Fraction f1, Fraction f2) {
+    //all good
+    public static Fraction divide(Fraction f1, Fraction f2) {
         int tnum = 1;
         int tden = 1;
         
         tnum = f1.num * f2.den;
         tden = f1.den * f2.num;
         
-        return new Fraction(tnum, tden);
+        Fraction t = new Fraction(tnum, tden);
+        t.reduce();
+        
+        return t;
     }
     
-    public Fraction add(Fraction f1, Fraction f2) {
+    //all good
+    public static Fraction add(Fraction f1, Fraction f2) {
         int tnum = 1;
         int tden = 1;
         
         tden = f1.den * f2.den;
         tnum = (f1.num * f2.den) + (f2.num * f1.den);
         
-        return new Fraction(tnum, tden);
+        Fraction t = new Fraction(tnum, tden);
+        t.reduce();
+        
+        return t;
     }
     
-    public Fraction subtract(Fraction f1, Fraction f2) {
+    //all good?
+    public static Fraction subtract(Fraction f1, Fraction f2) {
         int tnum = 1;
         int tden = 1;
         
         tden = f1.den * f2.den;
         tnum = (f1.num * f2.den) - (f2.num * f1.den);
         
-        return new Fraction(tnum, tden);
+        Fraction t = new Fraction(tnum, tden);
+        t.reduce();
+        
+        return t;
     }
     //Static Methods
     
     //Helper Methods
     
-    //Currently broken, send help :(
-    public int GCF(int n1, int n2) {
-        int t = n1 - n2;
+    //all good
+    public static int GCF(int n1, int n2) {
+        if (n1 < 0) n1 *= -1;
+        if (n2 < 0) n2 *= -1;
         
-        while (n1 != t) {
-            t = n1 - n2;
+        if (n1 == 0 && n2 != 0) {
+            return n2;
+        } else if (n1 != 0 && n2 == 0) {
+            return n1;
+        } else if (n1 == 0 && n2 == 0) {
+            System.out.println("Error, GCF of 0 & 0 is undefined. Returning GCF as '1'.");
+            return 1;
         }
         
-        return 1;
+        while (n1 != n2) {
+            if (n1 > n2) {
+                n1 -= n2;
+            } else if (n1 < n2) {
+                n2 -= n1;
+            }
+        }
+        
+        return n1;
     }
-    //Currently broken, send help :(
-    
     //Helper Methods
 }
